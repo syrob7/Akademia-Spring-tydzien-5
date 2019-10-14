@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guess the current exchange rate</title>
+</head>
+<body>
+<h1>Try to guess the exchange rate against PLN</h1>
+<form th:action="@{/check-currency-value}" th:object="${exchangeRates}" method="get">
+    <table border="1">
+        <tr>
+            <td><label th:text="#{msg.attempt}" /></td>
+            <td><input type="text" th:field="*{attempt}" th:readonly="true"/></td>
+        </tr>
+        <tr>
+            <td><label th:text="#{msg.CurrencyName}" /></td>
+            <td><input type="text" th:field="*{currencyName}" th:readonly="true"/></td>
+        </tr>
+        <tr>
+            <td><label th:text="#{msg.CurrencyRate}" /></td>
+            <td><input type="text" th:field="*{currencyUserValue}" th:readonly="${exchangeRates.isSuccess()} ? true : false"/></td>
+        </tr>
+        <tr>
+            <td><input type="submit"  th:value="${exchangeRates.isSuccess()} ? #{msg.New} : #{msg.Try}" /></td>
+            <td><label th:text="${exchangeRates.isSuccess()} ? #{msg.Succes} : #{msg.Fail}"/></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
