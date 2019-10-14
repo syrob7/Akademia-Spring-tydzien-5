@@ -27,7 +27,7 @@ public class ExchangeRatesController {
 
     private void setCurrency(Currency currency) {
         exchangeRates.setAttempt(1);
-        exchangeRates.setSuccess(false);
+        exchangeRates.setCompareResult(1000);
         exchangeRates.setCurrencyUserValue(null);
         switch (currency) {
             case EUR:
@@ -85,15 +85,19 @@ public class ExchangeRatesController {
             return "redirect:/exchange-rate";
         }
 
-        if (this.exchangeRates.isSuccess()) {
+        if (this.exchangeRates.getCompareResult() == 0) {
             setCurrency(getRandomCurrency());
             return "redirect:/exchange-rate";
         }
 
-        if (!this.exchangeRates.getCurrencyValue().equals(exchangeRates.getCurrencyUserValue())) {
+        if (this.exchangeRates.getCurrencyValue().compareTo(exchangeRates.getCurrencyUserValue()) == 0) {
+            this.exchangeRates.setCompareResult(0);
+        } else if(this.exchangeRates.getCurrencyValue().compareTo(exchangeRates.getCurrencyUserValue()) == 1) {
             this.exchangeRates.setAttempt(this.exchangeRates.getAttempt() + 1);
+            this.exchangeRates.setCompareResult(1);
         } else {
-            this.exchangeRates.setSuccess(true);
+            this.exchangeRates.setAttempt(this.exchangeRates.getAttempt() + 1);
+            this.exchangeRates.setCompareResult(-1);
         }
 
         this.exchangeRates.setCurrencyUserValue(exchangeRates.getCurrencyUserValue());

@@ -18,11 +18,16 @@
         </tr>
         <tr>
             <td><label th:text="#{msg.CurrencyRate}" /></td>
-            <td><input type="text" th:field="*{currencyUserValue}" th:readonly="${exchangeRates.isSuccess()} ? true : false"/></td>
+            <td><input type="text" th:field="*{currencyUserValue}" th:readonly="${exchangeRates.getCompareResult() == 0} ? true : false"/></td>
         </tr>
         <tr>
-            <td><input type="submit"  th:value="${exchangeRates.isSuccess()} ? #{msg.New} : #{msg.Try}" /></td>
-            <td><label th:text="${exchangeRates.isSuccess()} ? #{msg.Succes} : #{msg.Fail}"/></td>
+            <td><input type="submit"  th:value="${exchangeRates.getCompareResult() == 0} ? #{msg.New} : #{msg.Try}" /></td>
+            <td th:switch="${exchangeRates.getCompareResult()}">
+                <span th:case="'0'"><label th:text="#{msg.Success}" /></span>
+                <span th:case="'1'"><label th:text="#{msg.LesserThan}" /></span>
+                <span th:case="'-1'"><label th:text="#{msg.BiggerThan}" /></span>
+                <span th:case="1000"><label th:text="#{msg.Empty}" /></span>
+            </td>
         </tr>
     </table>
 </form>

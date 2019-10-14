@@ -22,10 +22,18 @@ public class ExchangeRates {
     private String date;
 
     private String currencyName;
+    private Integer compareResult;
     private BigDecimal currencyValue;
     private BigDecimal currencyUserValue;
     private int attempt;
-    private Boolean isSuccess;
+
+    public Integer getCompareResult() {
+        return compareResult;
+    }
+
+    public void setCompareResult(Integer compareResult) {
+        this.compareResult = compareResult;
+    }
 
     public String getCurrencyName() {
         return currencyName;
@@ -57,14 +65,6 @@ public class ExchangeRates {
 
     public void setAttempt(int attempt) {
         this.attempt = attempt;
-    }
-
-    public Boolean isSuccess() {
-        return isSuccess;
-    }
-
-    public void setSuccess(Boolean success) {
-        isSuccess = success;
     }
 
     @JsonIgnore
